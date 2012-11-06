@@ -102,11 +102,7 @@ class Map():
                 deltaX = x - i['x']
                 
                 try:
-                    # Try to access root key
-                    if s[deltaY][deltaX] == 1:
-                        return True
-                    else:
-                        return False
+                    return s[deltaY][deltaX] == 1
                 except (Exception) as e:
                     return False
                 
