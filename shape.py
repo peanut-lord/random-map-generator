@@ -18,7 +18,22 @@ class ForestShape():
         
         shape = [[choice(range(0, 2)) for j in range(0, width)] for i in range(0, height)]
         return shape
+    
+class MountainShape():
+    def __init__(self):
+        """Nothing to do constructor... :) """
+        pass
+    
+    def getShape(self):
+        """Returns the shape of a forest
+        
+        Creates a array for the mountain shape
+        """
+        return [[0, 1, 0], [1, 1, 1]]
 
 if __name__ == '__main__':
-    shape = ForestShape()
-    print shape.getShape()
+    forest = ForestShape()
+    mountain = MountainShape()
+    
+    print forest.getShape()
+    print mountain.getShape()

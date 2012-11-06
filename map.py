@@ -1,19 +1,12 @@
 from __future__ import print_function
 from random import choice
-from forest import ForestShape
+from shape import ForestShape, MountainShape
 
 # from forest import shape
 
 class Map():
-    
-    # Ready to draw a map element
-    STATE_READY = 1
-    
-    # Started drawing map elements (like a group of trees for a forest9
-    STATE_STARTED = 2
-    
     # Flag for colored terminal output + the codes
-    USE_CMD_COLOR = True
+    USE_CMD_COLOR = False
     CMD_FORMAT = '\033[%sm%s\033[0m'
     
     # Token for Bounds
@@ -44,7 +37,7 @@ class Map():
             return
         
         self.TOKEN_WALL = self.CMD_FORMAT % ('1;30', self.TOKEN_WALL) # Grey
-        self.TOKEN_TREE = self.CMD_FORMAT % ('32', self.TOKEN_TREE) # On Green
+        self.TOKEN_TREE = self.CMD_FORMAT % ('32', self.TOKEN_TREE) # Green
     
     def _calculateForest(self):
         """Calculates the postions of the forest"""
