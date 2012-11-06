@@ -10,11 +10,16 @@ class Map():
 	# Started drawing map elements (like a group of trees for a forest9
 	STATE_STARTED = 2
 	
+	# Flag for colored terminal output + the codes
+	USE_CMD_COLOR = False
+	CMD_FORMAT = '\033[%dm%s\033[0m'
+	
 	# Token for Bounds
 	TOKEN_WALL = '#'
 	TOKEN_SPACE = '-'
 	TOKEN_TREE  = 'T'
 	TOKEN_WATER = 'W'
+	TOKEN_MOUNTAIN = 'M'
 	
 	# Dimension of the map
 	size = {'width': 20, 'height': 20}
@@ -29,6 +34,14 @@ class Map():
 		# Map dimensions will be used to calculate amount of forests, seas and blocks
 		self.size['width'], self.size['height'] = width, height
 		self._calculateForest()
+		self._initColor();
+		
+	def _initColor(self):
+		if self.USE_CMD_COLOR is False:
+			return
+		
+		self.TOKEN_WALL = self.CMD_FORMAT % (30, self.TOKEN_WALL) # Grey
+		self.TOKEN_TREE = self.CMD_FORMAT % (42, self.TOKEN_TREE) # On Green
 	
 	def _calculateForest(self):
 		# todo calc all coords through?
@@ -44,6 +57,7 @@ class Map():
 		toPlace = []
 		while True:
 			# Find some random coords, -1 for the borders
+			# todo find better coord's, sometimes forest is just to close to each other 
 			x = choice(range(1, self.size['width']-1))
 			y = choice(range(1, self.size['height']-1))
 			
