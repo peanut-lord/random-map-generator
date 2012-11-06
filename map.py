@@ -13,8 +13,8 @@ class Map():
     STATE_STARTED = 2
     
     # Flag for colored terminal output + the codes
-    USE_CMD_COLOR = False
-    CMD_FORMAT = '\033[%dm%s\033[0m'
+    USE_CMD_COLOR = True
+    CMD_FORMAT = '\033[%sm%s\033[0m'
     
     # Token for Bounds
     TOKEN_WALL = '#'
@@ -43,8 +43,8 @@ class Map():
         if self.USE_CMD_COLOR is False:
             return
         
-        self.TOKEN_WALL = self.CMD_FORMAT % (30, self.TOKEN_WALL) # Grey
-        self.TOKEN_TREE = self.CMD_FORMAT % (42, self.TOKEN_TREE) # On Green
+        self.TOKEN_WALL = self.CMD_FORMAT % ('1;30', self.TOKEN_WALL) # Grey
+        self.TOKEN_TREE = self.CMD_FORMAT % ('32', self.TOKEN_TREE) # On Green
     
     def _calculateForest(self):
         """Calculates the postions of the forest"""
@@ -107,7 +107,7 @@ class Map():
                     return False
                 
     def _getToken(self, x, y):
-        """Returns a tile token depending of there is a object place like a tree, mountain or water"""
+        """Returns a tile token depending if there is a object place like a tree, mountain or water"""
         # Top, bottom, outer left and outer right always have walls
         if self._isBound(x, y):
             return self.TOKEN_WALL
