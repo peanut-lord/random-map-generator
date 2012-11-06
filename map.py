@@ -39,6 +39,7 @@ class Map():
         self._initColor();
     
     def _initColor(self):
+        """Init's the color if cmd color is enabled"""
         if self.USE_CMD_COLOR is False:
             return
         
@@ -46,6 +47,7 @@ class Map():
         self.TOKEN_TREE = self.CMD_FORMAT % (42, self.TOKEN_TREE) # On Green
     
     def _calculateForest(self):
+        """Calculates the postions of the forest"""
         # todo calc all coords through?
         
         # Estimate the amount of forests. The trees should take one quarter of the map, 
@@ -89,7 +91,7 @@ class Map():
         return x == 0 or x == self.size['width'] - 1 or y == 0 or y == self.size['height'] - 1
     
     def _hasTree(self, x, y):
-        # Todo this could take care of any shape
+        # Todo this code could take care of any shape
         for i in self.forest:
             # We always draw from left to right, so check if the forest is within the coord's
             if i['x'] + 2 >= x and x >= i['x'] and i['y'] + 2 >= y and y >= i['y']:
@@ -107,33 +109,29 @@ class Map():
                         return False
                 except (Exception) as e:
                     return False
+                
+    def _getToken(self, x, y):
+        """Returns a tile token depending of there is a object place like a tree, mountain or water"""
+        # Top, bottom, outer left and outer right always have walls
+        if self._isBound(x, y):
+            return self.TOKEN_WALL
+        else:
+            # We don't want a boring map, what about some water, trees and blocks? 
+            if self._hasTree(x, y):
+                return self.TOKEN_TREE
+            else:
+                return self.TOKEN_SPACE
 
     def _calculateTiles(self):
-        
-        # Draw bounds
-        for y in xrange(0, self.size['height']):
-
-            # Tile row
-            row = []
-
-            for x in xrange(0, self.size['width']):
-                # Top, bottom, outer left and outer right always have walls
-                if self._isBound(x, y):
-                    row.append(self.TOKEN_WALL)
-                else:
-                    # We don't want a boring map, what about some water, trees and blocks? 
-                    if self._hasTree(x, y):
-                        row.append(self.TOKEN_TREE)
-                    else:
-                        row.append(self.TOKEN_SPACE)
-
-            self.tiles.append(row)
+        """Calculates the map with all tiles"""
+        self.tiles = [[self._getToken(x, y) for x in xrange(0, self.size['width'])] for y in xrange(0, self.size['height'])]
 
     def _printTiles(self):
-        for t in self.tiles:
-            print(''.join(t))
+        """Prints the map to the cmd"""
+        [print(''.join(t)) for t in self.tiles]
 
     def render(self):
+        """Renders the map"""
         self._calculateTiles()
         self._printTiles()
 

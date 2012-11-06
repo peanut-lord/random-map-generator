@@ -2,6 +2,7 @@ from random import choice
 
 class ForestShape():
     def __init__(self):
+        """Nothing to do constructor... :) """
         pass
     
     def getShape(self):
@@ -18,14 +19,8 @@ class ForestShape():
         else:
             height = 2
         
-        shape = []
-        for i in range(0, height):
-            row = []
-            for j in range(0, width):
-                row.append(choice(range(0, 2)))
-            
-            shape.append(row)
-            
+        shape = [[choice(range(0, 2)) for j in xrange(0, width)] for i in xrange(0, height)]
+        
         return shape
 
 if __name__ == '__main__':
